@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Sela — Psarou, Mykonos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --linen:#F6F2EB;
+    --stone:#E7E0D4;
+    --ink:#1C2A33;
+    --aegean:#16384F;
+    --aegean-soft:#27566f;
+    --brass:#A9854F;
+    --muted:#6B6256;
+    --white:#FBFAF6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--linen);
+    color:var(--ink);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:.01em}
+  .eyebrow{
+    font-family:'Jost',sans-serif;font-weight:400;
+    text-transform:uppercase;letter-spacing:.32em;font-size:.7rem;color:var(--brass);
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.4rem clamp(1.5rem,5vw,4rem);
+    transition:background .4s ease, padding .4s ease;
+    mix-blend-mode:difference;color:#fff;
+  }
+  nav.scrolled{
+    mix-blend-mode:normal;background:rgba(246,242,235,.92);
+    backdrop-filter:blur(10px);color:var(--ink);
+    padding:.9rem clamp(1.5rem,5vw,4rem);
+    border-bottom:1px solid rgba(28,42,51,.08);
+  }
+  .brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:.18em;text-transform:uppercase}
+  .nav-links{display:flex;gap:clamp(1rem,2.5vw,2.4rem);align-items:center}
+  .nav-links a{font-size:.72rem;text-transform:uppercase;letter-spacing:.22em;font-weight:400;position:relative}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:currentColor;transition:width .35s ease}
+  .nav-links a:hover::after{width:100%}
+  .lang{display:flex;gap:.5rem;font-size:.72rem;letter-spacing:.15em}
+  .lang button{background:none;border:none;color:inherit;cursor:pointer;font-family:'Jost';opacity:.5;font-size:.72rem;letter-spacing:.15em;padding:0;transition:opacity .3s}
+  .lang button.active{opacity:1}
+  .lang span{opacity:.4}
+  .nav-toggle{display:none}
+
+  /* HERO */
+  header.hero{
+    position:relative;min-height:100vh;display:flex;align-items:flex-end;
+    padding:clamp(2rem,6vw,5rem);overflow:hidden;
+    background:
+      radial-gradient(120% 90% at 70% 10%, rgba(255,255,255,.30), transparent 55%),
+      linear-gradient(180deg,#bcd3da 0%, #7ba6b4 30%, #2f6379 62%, #16384F 100%);
+  }
+  header.hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(11,28,40,.55), transparent 55%);
+  }
+  .hero-inner{position:relative;z-index:2;color:#fff;max-width:960px}
+  .hero-inner .eyebrow{color:#f0e3cf}
+  .hero-inner h1{
+    font-size:clamp(3.4rem,11vw,8.5rem);line-height:.95;font-weight:300;
+    margin:.6rem 0 1rem;text-shadow:0 2px 40px rgba(0,0,0,.25);
+  }
+  .hero-inner p.tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.3rem,3vw,2rem);font-weight:300;opacity:.95;max-width:36ch}
+  .scrollcue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;color:#fff;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;opacity:.8}
+  .scrollcue::before{content:"";display:block;width:1px;height:46px;background:#fff;margin:0 auto .8rem;opacity:.6;animation:cue 2.4s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+  /* SECTIONS */
+  section{padding:clamp(4rem,11vw,9rem) clamp(1.5rem,7vw,8rem)}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s ease, transform 1s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .intro{display:grid;grid-template-columns:1fr;gap:2rem;max-width:1100px;margin:0 auto;text-align:center}
+  .intro h2{font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.1;color:var(--aegean)}
+  .intro p{font-size:1.05rem;color:var(--muted);max-width:60ch;margin:0 auto}
+  .rule{width:54px;height:1px;background:var(--brass);margin:1.6rem auto}
+
+  /* FEATURES */
+  .features{background:var(--white)}
+  .feat-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--stone);border:1px solid var(--stone)}
+  .feat{background:var(--white);padding:2.6rem 1.8rem;text-align:center}
+  .feat .num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:var(--aegean);line-height:1}
+  .feat .lbl{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.8rem}
+
+  /* GALLERY */
+  .gallery h2{text-align:center;font-size:clamp(2rem,4.5vw,3.2rem);color:var(--aegean);margin-bottom:.4rem}
+  .gallery .sub{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:3rem}
+  .grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .ph{position:relative;border-radius:2px;overflow:hidden;min-height:200px;display:flex;align-items:flex-end;color:rgba(255,255,255,.85)}
+  .ph span{position:relative;z-index:2;padding:1rem 1.2rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem}
+  .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,28,40,.45),transparent 60%)}
+  .g1{grid-column:span 4;min-height:360px;background:linear-gradient(135deg,#9fc0c8,#3a6a7d)}
+  .g2{grid-column:span 2;background:linear-gradient(135deg,#d8cdb8,#a98b63)}
+  .g3{grid-column:span 2;background:linear-gradient(135deg,#bcd3da,#5d8a98)}
+  .g4{grid-column:span 2;background:linear-gradient(135deg,#cdd9d2,#6f8f86)}
+  .g5{grid-column:span 2;background:linear-gradient(135deg,#e3d9c8,#16384F)}
+
+  /* LOCATION */
+  .location{background:var(--aegean);color:var(--linen)}
+  .loc-wrap{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:center}
+  .location .eyebrow{color:var(--brass)}
+  .location h2{font-size:clamp(2rem,4.5vw,3.2rem);margin:.6rem 0 1.4rem;color:#fff}
+  .location p{color:rgba(246,242,235,.8);font-size:1.02rem}
+  .loc-list{list-style:none;margin-top:2rem;border-top:1px solid rgba(246,242,235,.18)}
+  .loc-list li{display:flex;justify-content:space-between;padding:.95rem 0;border-bottom:1px solid rgba(246,242,235,.18);font-size:.9rem}
+  .loc-list li span:last-child{color:var(--brass);letter-spacing:.05em}
+
+  /* ENQUIRE */
+  .enquire{text-align:center;background:var(--white)}
+  .enquire h2{font-size:clamp(2.2rem,5vw,3.6rem);color:var(--aegean);line-height:1.1}
+  .enquire p{color:var(--muted);max-width:48ch;margin:1.2rem auto 2.4rem}
+  .btn{
+    display:inline-block;border:1px solid var(--aegean);color:var(--aegean);
+    padding:1rem 2.6rem;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;
+    transition:all .4s ease;background:transparent;
+  }
+  .btn:hover{background:var(--aegean);color:var(--linen)}
+
+  /* FOOTER / LEGAL */
+  footer{background:var(--ink);color:rgba(246,242,235,.7);padding:clamp(3rem,7vw,5rem) clamp(1.5rem,7vw,8rem) 2.5rem}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:2rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(246,242,235,.12)}
+  .foot-brand{font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:.16em;text-transform:uppercase;color:#fff}
+  .legal{margin-top:2.5rem}
+  .legal h4{font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);margin-bottom:1.4rem;font-family:'Jost';font-weight:400}
+  .legal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem 2.5rem;font-size:.82rem;line-height:1.6}
+  .legal-grid dt{color:rgba(246,242,235,.45);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.2rem}
+  .legal-grid dd{color:rgba(246,242,235,.92)}
+  .todo{color:#d9b27a;font-style:italic}
+  .legal-note{margin-top:2rem;font-size:.72rem;color:rgba(246,242,235,.4);max-width:70ch;line-height:1.6}
+  .copy{margin-top:2.5rem;font-size:.7rem;letter-spacing:.1em;color:rgba(246,242,235,.35)}
+
+  @media(max-width:820px){
+    .nav-links{display:none}
+    .feat-grid{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .g1,.g2,.g3,.g4,.g5{grid-column:span 1;min-height:240px}
+    .loc-wrap{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="brand" data-i18n="brand">Villa Sela</a>
+  <div class="nav-links">
+    <a href="#villa" data-i18n="nav_villa">The Villa</a>
+    <a href="#gallery" data-i18n="nav_gallery">Gallery</a>
+    <a href="#location" data-i18n="nav_location">Location</a>
+    <a href="#enquire" data-i18n="nav_enquire">Enquire</a>
+    <div class="lang">
+      <button data-lang="en" class="active">EN</button><span>/</span><button data-lang="fr">FR</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow" data-i18n="hero_eyebrow">Psarou · Agios Lazaros, Mykonos</div>
+    <h1 data-i18n="hero_title">Villa Sela</h1>
+    <p class="tag" data-i18n="hero_tag">A private five-suite retreat above the Aegean.</p>
+  </div>
+  <div class="scrollcue" data-i18n="scroll">Discover</div>
+</header>
+
+<section id="villa" class="intro reveal">
+  <div class="eyebrow" data-i18n="intro_eyebrow">The Villa</div>
+  <h2 data-i18n="intro_title">An intimate estate on the Agios Lazaros peninsula</h2>
+  <div class="rule"></div>
+  <p data-i18n="intro_body">Moments from Psarou Beach, Villa Sela offers roughly 294 m² of refined Cycladic living — five en-suite bedrooms, expansive terraces, and an infinity pool that frames the open sea. Privacy, light, and the unmistakable calm of Mykonos at its most exclusive.</p>
+</section>
+
+<section class="features reveal">
+  <div class="feat-grid">
+    <div class="feat"><div class="num">5</div><div class="lbl" data-i18n="f1">En-suite bedrooms</div></div>
+    <div class="feat"><div class="num">294</div><div class="lbl" data-i18n="f2">m² of living space</div></div>
+    <div class="feat"><div class="num">∞</div><div class="lbl" data-i18n="f3">Infinity pool</div></div>
+    <div class="feat"><div class="num">2′</div><div class="lbl" data-i18n="f4">From Psarou Beach</div></div>
+    <div class="feat"><div class="num">360°</div><div class="lbl" data-i18n="f5">Aegean sea views</div></div>
+    <div class="feat"><div class="num">24/7</div><div class="lbl" data-i18n="f6">Concierge on request</div></div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery reveal">
+  <h2 data-i18n="gal_title">Gallery</h2>
+  <div class="sub todo" data-i18n="gal_sub">Replace these blocks with your villa photography.</div>
+  <div class="grid">
+    <div class="ph g1"><span data-i18n="gal1">Pool &amp; sea view</span></div>
+    <div class="ph g2"><span data-i18n="gal2">Master suite</span></div>
+    <div class="ph g3"><span data-i18n="gal3">Living space</span></div>
+    <div class="ph g4"><span data-i18n="gal4">Terrace</span></div>
+    <div class="ph g5"><span data-i18n="gal5">Sunset</span></div>
+  </div>
+</section>
+
+<section id="location" class="location reveal">
+  <div class="loc-wrap">
+    <div>
+      <div class="eyebrow" data-i18n="loc_eyebrow">Location</div>
+      <h2 data-i18n="loc_title">Between Psarou &amp; Ornos</h2>
+      <p data-i18n="loc_body">The Agios Lazaros peninsula is among the most prestigious addresses on Mykonos — minutes from the island's most celebrated beach clubs, yet secluded and serene. Mykonos Town, the airport, and the new port are all within easy reach.</p>
+    </div>
+    <ul class="loc-list">
+      <li><span data-i18n="l1">Psarou Beach</span><span>2 min</span></li>
+      <li><span data-i18n="l2">Ornos Beach</span><span>5 min</span></li>
+      <li><span data-i18n="l3">Mykonos Town</span><span>10 min</span></li>
+      <li><span data-i18n="l4">Airport (JMK)</span><span>12 min</span></li>
+      <li><span data-i18n="l5">New Port</span><span>15 min</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="enquire" class="enquire reveal">
+  <div class="eyebrow" data-i18n="enq_eyebrow">Enquire</div>
+  <h2 data-i18n="enq_title">Available for the 2027 season</h2>
+  <p data-i18n="enq_body">For availability, rates, and bespoke arrangements, please contact us directly.</p>
+  <a class="btn" href="mailto:contact@villasela.com" data-i18n="enq_btn">Request availability</a>
+</section>
+
+<footer>
+  <div class="foot-top">
+    <div class="foot-brand" data-i18n="brand2">Villa Sela</div>
+    <div style="font-size:.8rem;line-height:1.8">
+      <div data-i18n="foot_loc">Agios Lazaros · Psarou, 84600 Mykonos, Greece</div>
+      <div>contact@villasela.com</div>
+    </div>
+  </div>
+
+  <div class="legal">
+    <h4 data-i18n="legal_h">Company information — Art. 47, Law 4072/2012</h4>
+    <dl class="legal-grid">
+      <div><dt data-i18n="lg_name">Company name</dt><dd>Wiz Mykonos Single-Member P.C.<br><span style="opacity:.6">Wiz Mykonos Μονοπρόσωπη Ι.Κ.Ε.</span></dd></div>
+      <div><dt data-i18n="lg_gemi">GEMI number</dt><dd>83676301000</dd></div>
+      <div><dt data-i18n="lg_seat">Registered office &amp; address</dt><dd>Korai 3, 10564 Athens, Greece</dd></div>
+      <div><dt data-i18n="lg_cap">Share capital</dt><dd>€2,210,000</dd></div>
+      <div><dt data-i18n="lg_mgr">Management</dt><dd>Ilan Wizman <span data-i18n="lg_mgr_role">(Manager)</span></dd></div>
+      <div><dt data-i18n="lg_part">Partner &amp; contribution</dt><dd>Ilan Wizman — <span data-i18n="lg_part_cat">sole partner; capital contributions</span></dd></div>
+      <div><dt data-i18n="lg_afm">Tax ID (AFM)</dt><dd>802837172</dd></div>
+    </dl>
+    <p class="legal-note" data-i18n="legal_note">This page constitutes the corporate website of Wiz Mykonos I.K.E. for the purposes of Article 47 of Law 4072/2012. Its address is registered with the General Commercial Registry (GEMI).</p>
+  </div>
+
+  <div class="copy">© <span id="yr"></span> Wiz Mykonos I.K.E. — <span data-i18n="rights">All rights reserved.</span></div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // nav scroll state
+  const nav = document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>80));
+
+  // reveal on scroll
+  const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // i18n
+  const dict = {
+    fr:{
+      brand:"Villa Sela", brand2:"Villa Sela",
+      nav_villa:"La Villa", nav_gallery:"Galerie", nav_location:"Situation", nav_enquire:"Réserver",
+      hero_eyebrow:"Psarou · Agios Lazaros, Mykonos",
+      hero_title:"Villa Sela",
+      hero_tag:"Une retraite privée de cinq suites au-dessus de la mer Égée.",
+      scroll:"Découvrir",
+      intro_eyebrow:"La Villa",
+      intro_title:"Un domaine intime sur la presqu'île d'Agios Lazaros",
+      intro_body:"À quelques pas de la plage de Psarou, la Villa Sela offre près de 294 m² de vie cycladique raffinée — cinq chambres en suite, de vastes terrasses et une piscine à débordement ouverte sur la mer. Intimité, lumière et le calme inimitable du Mykonos le plus exclusif.",
+      f1:"Chambres en suite", f2:"m² habitables", f3:"Piscine à débordement", f4:"De la plage de Psarou", f5:"Vues sur la mer Égée", f6:"Conciergerie sur demande",
+      gal_title:"Galerie", gal_sub:"Remplacez ces blocs par les photographies de votre villa.",
+      gal1:"Piscine & vue mer", gal2:"Suite parentale", gal3:"Pièce de vie", gal4:"Terrasse", gal5:"Coucher de soleil",
+      loc_eyebrow:"Situation", loc_title:"Entre Psarou & Ornos",
+      loc_body:"La presqu'île d'Agios Lazaros compte parmi les adresses les plus prestigieuses de Mykonos — à quelques minutes des beach clubs les plus réputés de l'île, tout en restant préservée et sereine. La ville de Mykonos, l'aéroport et le nouveau port sont aisément accessibles.",
+      l1:"Plage de Psarou", l2:"Plage d'Ornos", l3:"Ville de Mykonos", l4:"Aéroport (JMK)", l5:"Nouveau port",
+      enq_eyebrow:"Réserver", enq_title:"Disponible pour la saison 2027",
+      enq_body:"Pour les disponibilités, les tarifs et toute demande sur mesure, contactez-nous directement.",
+      enq_btn:"Demander les disponibilités",
+      foot_loc:"Agios Lazaros · Psarou, 84600 Mykonos, Grèce",
+      legal_h:"Informations sur la société — Art. 47, Loi 4072/2012",
+      lg_name:"Dénomination sociale", lg_gemi:"Numéro GEMI", lg_seat:"Siège & adresse",
+      lg_cap:"Capital social", lg_mgr:"Gérance", lg_mgr_role:"(Gérant)",
+      lg_part:"Associé & apport", lg_part_cat:"associé unique ; apports en capital", lg_afm:"N° fiscal (AFM)",
+      legal_note:"Cette page constitue le site internet de la société Wiz Mykonos I.K.E. au sens de l'article 47 de la loi 4072/2012. Son adresse est enregistrée auprès du Registre Général du Commerce (GEMI).",
+      rights:"Tous droits réservés."
+    }
+  };
+  const originals = {};
+  document.querySelectorAll('[data-i18n]').forEach(el=>originals[el.getAttribute('data-i18n')]=el.innerHTML);
+
+  function setLang(lang){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const k = el.getAttribute('data-i18n');
+      if(lang==='fr' && dict.fr[k]!==undefined) el.innerHTML = dict.fr[k];
+      else el.innerHTML = originals[k];
+    });
+    document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  }
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+</script>
+</body>
+</html>
